@@ -9,7 +9,7 @@ const AuthorPage = () => {
   const {posts} = useSelector((store: RootState)=>store.post)
 
   return (
-    <div className="p-4">
+    <div className="p-4 max-w-5xl mx-auto">
       <div className="max-w-3xl p-2 mx-auto flex justify-center items-center flex-col space-y-4">
 
         <div className="w-[30vw] h-auto mx-auto rounded-lg shadow-lg">
