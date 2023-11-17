@@ -1,4 +1,5 @@
-import HomePageTemplate from "@/ui/templates/HomePageTemplate";
+import { HomePageTemplate } from "@/ui/templates";
+
 
 export const getPosts = async ({
   skip,
@@ -18,15 +19,14 @@ export const getPosts = async ({
     range: jsonResponse.total / (limit ?? 10),
   };
 };
-
-export default async function Home({
+export async function Home({
   searchParams,
 }: {
-  searchParams: { page: string | undefined };
+  searchParams: { page: string | null };
 }) {
   const { posts, range } = await getPosts({
     skip: (+(searchParams.page ?? 1) - 1) * 10,
   });
 
-  return <HomePageTemplate posts={posts} range={range} />;
+  return <HomePageTemplate posts={posts} />;
 }

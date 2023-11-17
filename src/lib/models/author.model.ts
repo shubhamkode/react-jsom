@@ -5,5 +5,5 @@ export interface Author {
   email: string;
   phone: string;
   username: string;
-  image?: string;
+  image: string;
 }
