@@ -1,32 +1,40 @@
 import { HomePageTemplate } from "@/ui/templates";
+import { Post } from "@/lib/models";
+import PaginationBar from "@/components/paginationBar";
+import { BASE_URL } from "@/lib/helpers";
 
-
-export const getPosts = async ({
+const getPosts = async ({
   skip,
   limit,
 }: {
   skip?: number;
   limit?: number;
-}) => {
-  const response = await fetch(
-    `https://dummyjson.com/posts?skip=${skip ?? 0}&limit=${limit ?? 10}`
-  );
-
-  const jsonResponse = await response.json();
-
-  return {
-    posts: jsonResponse.posts,
-    range: jsonResponse.total / (limit ?? 10),
-  };
+} = {}): Promise<{ posts: Post[]; max: number }> => {
+  const jsonResponse = await fetch(
+    `${BASE_URL}/posts?skip=${skip ?? 0}&limit=${limit ?? 10}`
+  ).then(async (res) => await res.json());
+  return { posts: jsonResponse.posts, max: jsonResponse.total / (limit ?? 10) };
 };
-export async function Home({
+
+const getCurrentPage = (page: string | null) => +(page ?? 1);
+
+const HomePage = async ({
   searchParams,
 }: {
   searchParams: { page: string | null };
-}) {
-  const { posts, range } = await getPosts({
-    skip: (+(searchParams.page ?? 1) - 1) * 10,
+}) => {
+  const currentPage = getCurrentPage(searchParams.page);
+
+  const { posts, max } = await getPosts({
+    skip: (currentPage - 1) * 10,
+    limit: 10,
   });
 
-  return <HomePageTemplate posts={posts} />;
-}
+  return (
+    <>
+      <HomePageTemplate posts={posts} />
+      <PaginationBar current={currentPage} max={max} />
+    </>
+  );
+};
+export default HomePage;

@@ -1,26 +1,10 @@
-import { Post } from "@/lib/models/post.model";
-import PostDetailPageTemplate from "@/ui/templates/PostDetailPageTemplate";
-import { Author } from "@/lib/models/author.model";
-import { Comment } from "@/lib/models/comment.model";
-import PostsLoading from "./loading";
+import { BASE_URL } from "@/lib/helpers";
+import { Post } from "@/lib/models";
+import { PostDetailPageTemplate } from "@/ui/templates";
 
 const getPostById = async (id: number): Promise<Post> => {
-  const post = await fetch(`https://dummyjson.com/posts/${id}`).then((res) =>
-    res.json()
-  );
+  const post = await fetch(`${BASE_URL}/posts/${id}`).then((res) => res.json());
   return { ...post };
-};
-const getAuthor = async (authorId: number): Promise<Author> => {
-  const author = await fetch(`https://dummyjson.com/users/${authorId}`).then(
-    (res) => res.json()
-  );
-  return { ...author };
-};
-const getComments = async (postId: number): Promise<Comment[]> => {
-  const comments = await fetch(
-    `https://dummyjson.com/posts/${postId}/comments`
-  ).then((res) => res.json());
-  return comments.comments;
 };
 
 export default async function PostDetailsPage({
@@ -28,13 +12,6 @@ export default async function PostDetailsPage({
 }: {
   params: { id: number };
 }) {
-  const post = await getPostById(+params.id);
-
-  return (
-    <PostDetailPageTemplate
-      post={post}
-      author={await getAuthor(post.userId)}
-      comments={await getComments(+params.id)}
-    />
-  );
+  const post = getPostById(+params.id);
+  return <PostDetailPageTemplate post={await post} />;
 }
