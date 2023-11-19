@@ -1,15 +1,13 @@
+import { FC } from "react";
+
 import { BASE_URL } from "@/lib/helpers";
 import { Author } from "@/lib/models";
-import { FC } from "react";
-import AuthorTile from "../molecules/AuthorTile";
+import { AuthorTile } from "../molecules";
 
 interface IAuthorSectionProps {
   authorId: number;
 }
 
-// function wait<T>(ms: number, value: T) {
-//   return new Promise<T>((resolve) => setTimeout(resolve, ms, value));
-// }
 
 const getAuthorOfPost = async (authorId: number): Promise<Author> => {
   const jsonResponse = await fetch(`${BASE_URL}/users/${authorId}`).then(
@@ -19,8 +17,8 @@ const getAuthorOfPost = async (authorId: number): Promise<Author> => {
 };
 
 const AuthorSection: FC<IAuthorSectionProps> = async ({ authorId }) => {
-  const author = await getAuthorOfPost(authorId);
-  return <AuthorTile author={author} />;
+  const author = getAuthorOfPost(authorId);
+  return <AuthorTile author={await author} />;
 };
 
 export default AuthorSection;

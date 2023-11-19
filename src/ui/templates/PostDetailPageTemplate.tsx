@@ -1,9 +1,11 @@
-import { Post } from "@/lib/models";
 import Balancer from "react-wrap-balancer";
 import { FC, Suspense } from "react";
-import { CommentSection, AuthorSection } from "../sections";
+
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+
+import { Post } from "@/lib/models";
+import { CommentSection, AuthorSection } from "../sections";
 
 interface IPostDetailPageTemplateProps {
   post: Post;

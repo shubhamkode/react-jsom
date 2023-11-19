@@ -1,30 +1,16 @@
-import AuthorsDetailsPageTemplate from "@/ui/templates/AuthorDetailsPageTemplate";
-import { Author } from "@/lib/models/author.model";
-import { Post } from "@/lib/models/post.model";
+import { Author } from "@/lib/models";
+import { BASE_URL } from "@/lib/helpers";
+import { AuthorDetailPageTemplate } from "@/ui/templates";
 
-const getAuthorById = async (userId: number): Promise<Author> => {
-  const author = await fetch(`https://dummyjson.com/users/${userId}`).then(
+const getAuthorById = async (userId: number): Promise<Author> =>
+  await fetch(`${BASE_URL}/users/${userId}`).then(
     async (res) => await res.json()
   );
-  return author;
+
+const AuthorDetailsPage = async ({ params }: { params: { id: number } }) => {
+  const author = getAuthorById(+params.id);
+
+  return <AuthorDetailPageTemplate author={await author} />;
 };
 
-const getPostByAuthor = async (userId: number): Promise<Post[]> => {
-  const posts = await fetch(`https://dummyjson.com/users/${userId}/posts`).then(
-    async (res) => await res.json()
-  );
-  return posts.posts;
-};
-
-export default async function AuthorDetailsPage({
-  params,
-}: {
-  params: { id: number };
-}) {
-  return (
-    <AuthorsDetailsPageTemplate
-      author={await getAuthorById(+params.id)}
-      authorPosts={await getPostByAuthor(+params.id)}
-    />
-  );
-}
+export default AuthorDetailsPage;

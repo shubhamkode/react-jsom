@@ -12,18 +12,17 @@ interface IPostTileProps {
 const PostTile: FC<IPostTileProps> = ({ post }) => {
   return (
     <div className="py-3 px-4">
-      <Link href={`/posts/${post.id}`}>
-        <Balancer
-          as="h2"
-          className="text-[calc(0.39vw+22px)] leading-tight tracking-wide capitalizeFirst font-[500]"
-        >
-          {post.title}
-        </Balancer>
-      </Link>
+      <Balancer
+        as={Link}
+        href={`/posts/${post.id}`}
+        className="text-[calc(0.39vw+22px)]  tracking-wide capitalizeFirst font-[500] leading-tight"
+      >
+        {post.title}
+      </Balancer>
 
       <Link
         href={`/posts/${post.id}`}
-        className="mt-3 text-base line-clamp-2 tracking-wider  leading-5  opacity-70 capitalizeFirst "
+        className="mt-3 text-base line-clamp-2 tracking-wider  leading-5  opacity-70 capitalizeFirst"
       >
         {post.body}
       </Link>

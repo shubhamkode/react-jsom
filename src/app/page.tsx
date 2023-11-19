@@ -1,6 +1,6 @@
 import { HomePageTemplate } from "@/ui/templates";
 import { Post } from "@/lib/models";
-import PaginationBar from "@/components/paginationBar";
+import { PaginationBar } from "@/components";
 import { BASE_URL } from "@/lib/helpers";
 
 const getPosts = async ({

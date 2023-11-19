@@ -12,11 +12,11 @@ const AuthorTile: FC<IAuthorTileProps> = ({ author }) => {
     <div className="flex items-center mt-2 px-2 py-1">
       {author.image && (
         <Image
-          alt="profilePic"
+          alt={`${author.firstName.at(0)}`}
           width="50"
           height="50"
           src={author.image}
-          className="w-7 h-auto aspect-square rounded-full bg-orange-50/80"
+          className="w-7 h-auto aspect-square rounded-full bg-orange-50/80 text-center"
         />
       )}
       <Link
